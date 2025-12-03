@@ -1,7 +1,7 @@
 import React from "react";
 import HeroSection from "../components/HeroSection";
 import SectionWrapper from "../components/SectionWrapper";
-import { Grid, Card, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box } from "@mui/material";
+import { Grid, Card, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function Rewards() {

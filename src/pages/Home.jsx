@@ -2,7 +2,7 @@ import React from "react";
 import HeroSection from "../components/HeroSection";
 import SectionWrapper from "../components/SectionWrapper";
 import FeatureGrid from "../components/FeatureGrid";
-import { Typography, Box, Grid, Card, CardContent, Button } from "@mui/material";
+import { Typography, Box, Grid, Card, Button } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function Home() {
