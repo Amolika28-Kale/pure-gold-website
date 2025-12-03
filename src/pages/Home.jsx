@@ -118,24 +118,25 @@ export default function Home() {
             </Grid>
 
             {/* Right: hero image + floating card */}
-            <Grid item xs={12} md={6}>
-                <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
-                    <Box sx={{ position: "relative", display: "flex", justifyContent: { xs: "center", md: "flex-end" } }}>
-                        {/* Hero image — CORRECTED SRC */}
-                        <Box
-                            component="img"
-                            src="https://images.unsplash.com/photo-1594953939527-dc8434a9990e?w=800&auto=format&fit=crop" 
-                            alt="Digital Gold Savings"
-                            sx={{ 
-                                width: "100%", 
-                                maxWidth: 400, 
-                                aspectRatio: "1/1", 
-                                objectFit: "cover", 
-                                borderRadius: 4, 
-                                boxShadow: "0 20px 40px rgba(0,0,0,0.4)" 
-                            }}
-                        />
-
+           <Grid item xs={12} md={6}>
+    <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
+        <Box sx={{ position: "relative", display: "flex", justifyContent: { xs: "center", md: "flex-end" } }}>
+            {/* Hero image — CORRECTED SRC */}
+            <Box
+                // Use the standard 'src' prop, and tell MUI to render an <img> element
+                component="img" 
+                src="/assets/gold coin.avif" // Use the public relative path
+                alt="Digital Gold Savings"
+                sx={{ 
+                    width: "100%", 
+                    maxWidth: 400, 
+                    aspectRatio: "1/1", 
+                    objectFit: "cover", 
+                    borderRadius: 4, 
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.4)" 
+                }}
+            />
+  
                         {/* Floating small card */}
                         <Card
                             sx={{

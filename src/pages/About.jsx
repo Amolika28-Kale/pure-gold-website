@@ -11,8 +11,10 @@ const GOLD_GRADIENT = "linear-gradient(90deg, #b8860b, #ffd700, #b8860b)";
 const GOLD_COLOR = "#b8860b";
 const DARK_BG = "#1a1a1a";
 const LIGHT_BG = "#f5f5f5";
-const BLUE_HERO_BG = "#1e37a3";
-// Framer Motion Variants
+const LIGHT_GOLD_BG = "#fffaf0"; // For subtle background accents
+const BLUE_HERO_BG = "#1e37a3"; // Consistent blue accent color
+
+// Framer Motion Variants (DEFINED HERE TO FIX 'is not defined' ERROR)
 const itemVariant = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -21,6 +23,7 @@ const containerVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { staggerChildren: 0.12 } },
 };
+const itemUp = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
 
 export default function About() {
@@ -75,85 +78,137 @@ export default function About() {
             <HeroSection
                 title="About PureGram: Securing India's Financial Future"
                 subtitle="Democratizing 24K gold investment, making it accessible to all, starting from just ₹100."
-                // Ensure HeroSection is set to the blue background when used via prop context if necessary
+                
             />
 
-            {/* Mission */}
-            <SectionWrapper sx={{ textAlign: "center", py: 8 }}>
-                <motion.div initial="initial" whileInView="animate" variants={itemVariant} viewport={{ once: true }}>
-                    <Typography variant="h4" fontWeight={700} mb={3}>
-                        Our Mission 🏆
-                    </Typography>
-                    <Typography 
-                        variant="h6" 
-                        sx={{ 
-                            maxWidth: 800, 
-                            mx: 'auto', 
-                            color: DARK_BG, 
-                            fontWeight: 500 
-                        }} 
-                        mb={6}
-                    >
-                        At PureGram, we believe every Indian deserves access to safe, simple, and rewarding wealth creation tools.
-                        We're building India's most trusted digital gold platform that combines the time-tested value of gold with modern technology and rewarding incentives.
-                    </Typography>
-                </motion.div>
+            {/* Mission Section (Mission Text Left, Image Right) */}
+            <SectionWrapper sx={{ py: 8 }}>
+                <Container maxWidth="lg">
+                    <Grid container spacing={6} alignItems="center" justifyContent="center">
+                        
+                        {/* LEFT COLUMN: Content (Mission Text) */}
+                        <Grid item xs={12} md={6}>
+                            <motion.div initial="initial" whileInView="animate" variants={containerVariants} viewport={{ once: true }}>
+                                <motion.div variants={itemUp}>
+                                    <Typography 
+                                        variant="h4" 
+                                        fontWeight={700} 
+                                        mb={3} 
+                                        sx={{ textAlign: { xs: 'center', md: 'left' } }} // Align title left on desktop
+                                    >
+                                        Our Mission
+                                    </Typography>
+                                </motion.div>
+                                
+                                <motion.div variants={itemUp}>
+                                    <Typography 
+                                        variant="h6" 
+                                        sx={{ 
+                                            color: DARK_BG, 
+                                            fontWeight: 500, 
+                                            textAlign: { xs: 'center', md: 'left' }, // Align text left on desktop
+                                            mb: 3
+                                        }}
+                                    >
+                                        At PureGram, we believe every Indian deserves access to safe, simple, and rewarding wealth creation tools. 
+                                        We're building India's most trusted digital gold platform that combines the time-tested value of gold with modern technology and rewarding incentives.
+                                    </Typography>
+                                </motion.div>
+                                
+                              
+
+                            </motion.div>
+                        </Grid>
+
+                        {/* RIGHT COLUMN: Image */}
+                        <Grid item xs={12} md={6}>
+                            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+                                <Box
+                                    component="img"
+                src="/assets/coins.avif" // Use the public relative path
+                                    alt="Gold Dust representing digital savings"
+                                    sx={{ 
+                                        width: "100%", 
+                                        maxWidth: { xs: '100%', md: 450 },
+                                        aspectRatio: '16/10',
+                                        objectFit: 'cover',
+                                        borderRadius: 4, 
+                                        boxShadow: '0 15px 30px rgba(0,0,0,0.1)'
+                                    }}
+                                />
+                            </motion.div>
+                        </Grid>
+                        
+                    </Grid>
+                </Container>
             </SectionWrapper>
 
-            {/* Challenge vs Solution */}
-            <SectionWrapper sx={{ background: LIGHT_BG }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center">
-                    Why India Needs PureGram
-                </Typography>
-                <Grid container spacing={4} justifyContent="center">
-                    {[
-                        {
-                            title: "The Savings Challenge 📉",
-                            desc: [
-                                "Inflation eating away at cash savings",
-                                "Lack of disciplined saving habits",
-                                "Complex investment products with high entry barriers",
-                                "No motivation or rewards for consistent saving",
-                                "Difficulty in building long-term wealth"
-                            ],
-                            bg: "#f0e4e4" // Subtle red/problem color
-                        },
-                        {
-                            title: "The PureGram Solution ✨",
-                            desc: [
-                                "Gold as an inflation hedge with historical value preservation",
-                                "Micro-savings model encourages regular deposits",
-                                "Start with just ₹100 - no minimum balance",
-                                "Earn up to 24% bonus gold rewards on savings",
-                                "Build tangible wealth you can see growing"
-                            ],
-                            bg: "#e4f0e9" // Subtle green/solution color
-                        }
-                    ].map((item, i) => (
-                        <Grid item xs={12} md={6} key={i}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: i * 0.2 }}
-                                viewport={{ once: true }}
-                            >
-                                <Card sx={{ p: 4, backgroundColor: item.bg, height: '100%', borderRadius: 4, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
-                                    <Typography variant="h5" fontWeight={700} mb={3} color={DARK_BG}>
-                                        {item.title}
-                                    </Typography>
-                                    <ul style={{ listStyle: "none", padding: 0, lineHeight: 2.2, textAlign: 'left' }}>
-                                        {item.desc.map((d, j) => (
-                                            <Typography component="li" key={j} color="text.primary" sx={{ fontSize: '1.05rem' }}>
-                                                {item.title.includes("Challenge") ? '⚠️' : '✅'} {d}
-                                            </Typography>
-                                        ))}
-                                    </ul>
-                                </Card>
-                            </motion.div>
-                        </Grid>
-                    ))}
-                </Grid>
-            </SectionWrapper>
+            {/* Challenge vs Solution (FORCED HORIZONTAL LAYOUT) */}
+<SectionWrapper sx={{ background: LIGHT_BG }}>
+    <Typography variant="h4" fontWeight={700} mb={6} textAlign="center">
+        Why India Needs PureGram
+    </Typography>
+    <Grid container spacing={4} justifyContent="center">
+        {/*
+            Changed xs={12} to xs={6} for both items. 
+            This forces a 50/50 horizontal split even on the smallest phones.
+        */}
+        {[
+            {
+                title: "The Savings Challenge ",
+                desc: [
+                    "Inflation eating away at cash savings",
+                    "Lack of disciplined saving habits",
+                    "Complex investment products with high entry barriers",
+                    "No motivation or rewards for consistent saving",
+                    "Difficulty in building long-term wealth"
+                ],
+                bg: "#f0e4e4" // Subtle red/problem color
+            },
+            {
+                title: "The PureGram Solution ",
+                desc: [
+                    "Gold as an inflation hedge with historical value preservation",
+                    "Micro-savings model encourages regular deposits",
+                    "Start with just ₹100 - no minimum balance",
+                    "Earn up to 24% bonus gold rewards on savings",
+                    "Build tangible wealth you can see growing"
+                ],
+                bg: "#e4f0e9" // Subtle green/solution color
+            }
+        ].map((item, i) => (
+            <Grid item xs={6} md={6} key={i}>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: i * 0.2 }}
+                    viewport={{ once: true }}
+                >
+                    <Card sx={{ 
+                        p: 4, 
+                        backgroundColor: item.bg, 
+                        height: '100%', 
+                        borderRadius: 4, 
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+                        // Added style optimization for the dense list text on narrow horizontal view
+                        fontSize: { xs: '0.6rem', sm: '0.8rem' }
+                    }}>
+                        <Typography variant="h5" fontWeight={700} mb={3} color={DARK_BG} sx={{ fontSize: { xs: '1rem', sm: '1.5rem' } }}>
+                            {item.title}
+                        </Typography>
+                        <ul style={{ listStyle: "none", padding: 0, lineHeight: 1.8, textAlign: 'left' }}>
+                            {item.desc.map((d, j) => (
+                                <Typography component="li" key={j} color="text.primary" sx={{ fontSize: { xs: '0.7rem', sm: '1.05rem' } }}>
+                                    {item.title.includes("Challenge") ? '' : ''} {d}
+                                </Typography>
+                            ))}
+                        </ul>
+                    </Card>
+                </motion.div>
+            </Grid>
+        ))}
+    </Grid>
+</SectionWrapper>
 
             {/* Core Values */}
             <SectionWrapper>
@@ -224,7 +279,7 @@ export default function About() {
 
             {/* CTA Section (High Contrast Premium) */}
        <SectionWrapper sx={{ py: 12, textAlign: "center", background: BLUE_HERO_BG, color: "#fff" }}>
-
+            <Container maxWidth="lg">
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
                     <Typography 
                         variant="h4" 
@@ -259,7 +314,8 @@ export default function About() {
                         Start Saving Gold Today
                     </Button>
                 </motion.div>
-            </SectionWrapper>
+            </Container>
+        </SectionWrapper>
         </>
     );
 }
