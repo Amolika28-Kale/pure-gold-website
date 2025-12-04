@@ -40,7 +40,6 @@ const navItems = [
     { label: "Contact", to: "/contact" },
 ];
 
-// Custom Nav Link Component matching the Figma card/pill look
 const NavLinkCard = ({ item, pathname }) => {
     const isActive = pathname === item.to;
     return (
@@ -48,27 +47,24 @@ const NavLinkCard = ({ item, pathname }) => {
             key={item.to}
             component={RouterLink}
             to={item.to}
+            variant="navbar"
             sx={{
-                py: 0.8,
-                px: 1.5,
-                borderRadius: 2,
-                margin: 0,
-                backgroundColor: isActive ? 'rgba(184, 134, 11, 0.1)' : 'transparent', 
+                backgroundColor: isActive ? 'rgba(184, 134, 11, 0.12)' : 'transparent', 
                 color: DARK_TEXT,
                 fontWeight: isActive ? 700 : 500,
                 textTransform: 'none',
-                transition: '0.2s ease',
+                px: 2, py: 1,
+                borderRadius: 2,
                 '&:hover': {
-                    backgroundColor: 'rgba(184, 134, 11, 0.05)',
-                    color: GOLD_COLOR,
+                    backgroundColor: 'rgba(184, 134, 11, 0.08)',
                 },
-                boxShadow: isActive ? '0 2px 5px rgba(0,0,0,0.1)' : 'none',
             }}
         >
             {item.label}
         </Button>
     );
 };
+
 
 export default function Navbar() {
     const { pathname } = useLocation();
@@ -169,11 +165,7 @@ export default function Navbar() {
                     variant="outlined" 
                     component={RouterLink} 
                     to="/login"
-                    sx={{
-                        borderColor: DARK_TEXT, color: DARK_TEXT, fontWeight: 700, borderRadius: 8,
-                        '&:hover': { borderColor: DARK_TEXT, backgroundColor: 'rgba(0, 0, 0, 0.05)' },
-                        py: 1, px: 2
-                    }}
+                   
                 >
                     Login
                 </Button>
@@ -254,11 +246,7 @@ export default function Navbar() {
                                 variant="outlined" 
                                 component={RouterLink} 
                                 to="/login"
-                                sx={{
-                                    borderColor: DARK_TEXT, color: DARK_TEXT, fontWeight: 700, borderRadius: 8,
-                                    '&:hover': { borderColor: DARK_TEXT, backgroundColor: 'rgba(0, 0, 0, 0.05)' },
-                                    py: 1, px: 2
-                                }}
+                             
                             >
                                 Login
                             </Button>

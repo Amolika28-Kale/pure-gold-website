@@ -1,0 +1,150 @@
+diff --git a/src/components/Hero.jsx b/src/components/Hero.jsx
+new file mode 100644
+index 0000000..e1b23f1
+--- /dev/null
++++ b/src/components/Hero.jsx
+@@ -0,0 +1,94 @@
++import React from "react";
++import { motion } from "framer-motion";
++
++export default function Hero() {
++  return (
++    <header
++      className="hero"
++      role="banner"
++      style={{
++        position: "relative",
++        overflow: "hidden",
++        padding: "6rem 1rem",
++        textAlign: "center",
++      }}
++    >
++      <motion.div
++        initial={{ opacity: 0, y: 24 }}
++        animate={{ opacity: 1, y: 0 }}
++        transition={{ duration: 0.7 }}
++        style={{ maxWidth: 1200, margin: "0 auto" }}
++      >
++        <h1
++          style={{
++            fontSize: "clamp(2rem, 4.5vw, 3.4rem)",
++            fontWeight: 700,
++            color: "#0f172a",
++            lineHeight: 1.1,
++            margin: 0,
++          }}
++        >
++          Premium Digital Gold Savings —{" "}
++          <span style={{ color: "#B8860B" }}>Pure Gold</span>
++        </h1>
++
++        <p
++          style={{
++            marginTop: 16,
++            fontSize: "1.1rem",
++            maxWidth: 600,
++            margin: "16px auto 0",
++            color: "#334155",
++          }}
++        >
++          Secure and flexible way to invest in gold — instant signup, simple
++          deposits, and easy redemption.
++        </p>
++
++        <div
++          style={{
++            marginTop: 28,
++            display: "flex",
++            gap: 12,
++            justifyContent: "center",
++          }}
++        >
++          <motion.a
++            whileHover={{ scale: 1.03 }}
++            whileTap={{ scale: 0.98 }}
++            href="#get-started"
++            className="btn-primary"
++          >
++            Get Started
++          </motion.a>
++
++          <motion.a
++            whileHover={{ scale: 1.02 }}
++            whileTap={{ scale: 0.985 }}
++            href="#how-it-works"
++            className="btn-ghost"
++          >
++            How it works
++          </motion.a>
++        </div>
++      </motion.div>
++
++      {/* subtle premium gradients */}
++      <div
++        aria-hidden
++        style={{
++          position: "absolute",
++          inset: 0,
++          pointerEvents: "none",
++          background:
++            "radial-gradient(circle at 10% 20%, rgba(255,215,0,0.08), transparent 10%), radial-gradient(circle at 90% 80%, rgba(99,102,241,0.06), transparent 15%)",
++        }}
++      />
++    </header>
++  );
++}
++
+diff --git a/src/pages/Home.jsx b/src/pages/Home.jsx
+index 82e19d2..c993aa9 100644
+--- a/src/pages/Home.jsx
++++ b/src/pages/Home.jsx
+@@ -1,6 +1,7 @@
+ import React from "react";
+ import Navbar from "../components/Navbar";
+ import Footer from "../components/Footer";
++import Hero from "../components/Hero";
+ 
+ export default function Home() {
+   return (
+@@ -8,6 +9,7 @@ export default function Home() {
+       <Navbar />
+ 
++      <Hero />
+ 
+       {/* other sections remain untouched */}
+ 
+diff --git a/src/index.css b/src/index.css
+index 8fbb5c4..afb1152 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -1,3 +1,34 @@
+ /* Existing CSS… */
++
++/* Premium button styles */
++.btn-primary {
++  padding: 0.85rem 1.5rem;
++  border-radius: 12px;
++  background: linear-gradient(90deg, #d4af37, #b8860b);
++  color: #ffffff !important;
++  text-decoration: none;
++  font-weight: 600;
++  display: inline-block;
++  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.12);
++}
++
++.btn-ghost {
++  padding: 0.75rem 1.25rem;
++  border-radius: 12px;
++  border: 1px solid rgba(15, 23, 42, 0.15);
++  color: #0f172a !important;
++  text-decoration: none;
++  font-weight: 500;
++  display: inline-block;
++  background: transparent;
++}
++
++/* Smooth animations */
++html {
++  scroll-behavior: smooth;
++}
++

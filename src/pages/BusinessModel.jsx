@@ -1,16 +1,21 @@
 import React from "react";
 import SectionWrapper from "../components/SectionWrapper";
-import { Grid, Card, Typography, Box } from "@mui/material";
+import { Grid, Card, Typography, Box, Button, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import { FaMobileAlt, FaChartLine, FaUsers, FaPercent, FaMoneyBillWave, FaCoins, FaWallet, FaHandshake, FaTrophy, FaChartArea, FaUserShield } from "react-icons/fa";
 
-// --- Premium Style Constants (Matching other components) ---
-const GOLD_COLOR = "#b8860b";
-const DARK_BG = "#1a1a1a";
-const LIGHT_BG = "#f5f5f5";
-const LIGHT_GOLD_BG = "#fffaf0";
-const GOLD_GRADIENT = "linear-gradient(90deg, #b8860b, #ffd700)";
+// --- Updated UI Colors ---
+const GOLD_GRADIENT = "linear-gradient(90deg, #FFD97D, #FFC700, #FFD97D)";
+const GOLD_COLOR = "#FFC700";
+const PRIMARY_BG = "#f9faff"; // light pastel background
+const LIGHT_ACCENT = "#fffaf0"; // light gold background for sections
+const CARD_BG = "#fff"; // white card background
+const HERO_COLOR = "#1e37a3"; // hero text accent
+// Gold gradient for numbers and buttons
+const HERO_BG = "linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%)"; // soft pastel gradient
 
+// Motion variants
+const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0, transition: { duration: 0.6 } }, viewport: { once: true } };
 
 export default function BusinessModel() {
     const marketData = [
@@ -74,28 +79,136 @@ export default function BusinessModel() {
 
     return (
         <>
-            {/* Market Opportunity */}
-            <SectionWrapper sx={{ background: LIGHT_BG }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: DARK_BG }}>
+
+            <Box
+      sx={{
+        background: HERO_BG,
+        py: { xs: 8, md: 14 },
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Sparkle Animation */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "-50%",
+          left: "-50%",
+          width: "200%",
+          height: "200%",
+          background: "radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%)",
+          borderRadius: "50%",
+          animation: "spin 10s linear infinite",
+          zIndex: 0,
+        }}
+      />
+
+      <Container sx={{ position: "relative", zIndex: 1 }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 800,
+              mb: 3,
+              fontSize: { xs: "2rem", md: "3rem" },
+              background: GOLD_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              textShadow: "0 2px 8px rgba(255,215,0,0.3)",
+            }}
+          >
+            Massive Market Penetration
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#333",
+              mb: 4,
+              fontSize: { xs: "1rem", md: "1.25rem" },
+              maxWidth: 600,
+              mx: "auto",
+            }}
+          >
+            Discover how PureGram’s unique business model enables sustainable growth, 
+            high profitability, and rapid adoption across India.
+          </Typography>
+
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              px: 6,
+              py: 1.5,
+              fontWeight: 700,
+              fontSize: "1rem",
+              background: GOLD_GRADIENT,
+              color: "#1a1a1a",
+              borderRadius: 10,
+              boxShadow: "0 10px 30px rgba(255,215,0,0.4)",
+              "&:hover": {
+                transform: "scale(1.05)",
+                boxShadow: "0 15px 40px rgba(255,215,0,0.6)",
+              },
+            }}
+          >
+            Explore Business Model
+          </Button>
+        </motion.div>
+      </Container>
+
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </Box>
+
+            {/* Market Opportunity with Sparkle */}
+            <SectionWrapper sx={{ background: PRIMARY_BG, py: 10 }}>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: HERO_COLOR }}>
                     Business Model: Sustainable Growth & Massive Market Penetration
                 </Typography>
                 <Grid container spacing={4} justifyContent="center">
                     {marketData.map((item, i) => (
                         <Grid item xs={12} sm={6} md={3} key={i}>
-                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.15 }} viewport={{ once: true }}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                transition={{ duration: 0.6, delay: i * 0.15 }}
+                                viewport={{ once: true }}
+                            >
                                 <Card sx={{
-                                    p: 4, textAlign: "center", height: '100%', borderRadius: 4,
-                                    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                                    borderBottom: `4px solid ${GOLD_COLOR}`
+                                    p: 4, textAlign: "center", height: '100%', borderRadius: 6,
+                                    boxShadow: "0 15px 35px rgba(0,0,0,0.05)",
+                                    border: `2px solid ${GOLD_COLOR}`,
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    "&::after": {
+                                        content: '""',
+                                        position: "absolute",
+                                        top: "-50%",
+                                        left: "-50%",
+                                        width: "200%",
+                                        height: "200%",
+                                        background: "radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 70%)",
+                                        animation: "spin 6s linear infinite",
+                                        borderRadius: "50%"
+                                    }
                                 }}>
                                     <Box sx={{ color: GOLD_COLOR, mb: 1.5 }}>{item.icon}</Box>
-                                    <Typography variant="h3" sx={{
-                                        fontWeight: 800,
+                                    <Typography variant="h3" fontWeight={800} sx={{
                                         background: GOLD_GRADIENT,
                                         WebkitBackgroundClip: "text",
                                         color: "transparent",
+                                        textShadow: "0 2px 8px rgba(255,215,0,0.3)"
                                     }}>{item.value}</Typography>
-                                    <Typography variant="subtitle1" fontWeight={600} color={DARK_BG}>{item.label}</Typography>
+                                    <Typography variant="subtitle1" fontWeight={600} color="#333">{item.label}</Typography>
                                 </Card>
                             </motion.div>
                         </Grid>
@@ -103,25 +216,24 @@ export default function BusinessModel() {
                 </Grid>
             </SectionWrapper>
 
-            {/* Revenue Sources */}
-            <SectionWrapper sx={{ background: DARK_BG, color: "#fff" }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: GOLD_COLOR }}>
-                    Core Revenue Streams: Ensuring Long-Term Profitability
+            {/* Revenue Streams */}
+            <SectionWrapper sx={{ background: LIGHT_ACCENT, py: 10 }}>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: HERO_COLOR }}>
+                    Core Revenue Streams
                 </Typography>
                 <Grid container spacing={4} justifyContent="center">
                     {revenueStreams.map((item, i) => (
                         <Grid item xs={12} sm={6} md={3} key={i}>
-                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.15 }} viewport={{ once: true }}>
+                            <motion.div {...fadeUp}>
                                 <Card sx={{
-                                    p: 4, textAlign: "center", height: '100%', borderRadius: 4,
-                                    background: "#2a2a2a", // Dark card on dark background
+                                    p: 4, textAlign: "center", height: '100%', borderRadius: 6,
+                                    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
                                     border: `2px solid ${GOLD_COLOR}`,
-                                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                                    "&:hover": { transform: "translateY(-5px)" }
+                                    "&:hover": { transform: "translateY(-5px)", transition: "0.3s" }
                                 }}>
                                     <Box sx={{ color: GOLD_COLOR, mb: 1 }}>{item.icon}</Box>
-                                    <Typography variant="h3" fontWeight={800} sx={{ color: GOLD_COLOR }}>{item.value}</Typography>
-                                    <Typography variant="h6" fontWeight={700} mb={1} sx={{ color: "#fff" }}>{item.label}</Typography>
+                                    <Typography variant="h4" fontWeight={800} sx={{ color: GOLD_COLOR }}>{item.value}</Typography>
+                                    <Typography variant="h6" fontWeight={700} color="#333">{item.label}</Typography>
                                 </Card>
                             </motion.div>
                         </Grid>
@@ -130,28 +242,27 @@ export default function BusinessModel() {
             </SectionWrapper>
 
             {/* Unit Economics */}
-            <SectionWrapper sx={{ background: LIGHT_GOLD_BG }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: DARK_BG }}>
+            <SectionWrapper sx={{ background: PRIMARY_BG, py: 10 }}>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: HERO_COLOR }}>
                     Positive Unit Economics at Scale
                 </Typography>
                 <Grid container spacing={4} justifyContent="center">
                     {unitEconomics.map((item, i) => (
                         <Grid item xs={12} sm={6} md={2} key={i}>
-                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.1 }}>
+                            <motion.div {...fadeUp}>
                                 <Card sx={{
-                                    p: 3, textAlign: "center", height: '100%', borderRadius: 4,
-                                    // Highlight profit section with a darker gold background
-                                    background: item.type === 'profit' ? GOLD_GRADIENT : '#fff',
-                                    color: item.type === 'profit' ? DARK_BG : DARK_BG,
+                                    p: 3, textAlign: "center", borderRadius: 6,
+                                    background: item.type === 'profit' ? GOLD_GRADIENT : CARD_BG,
+                                    color: item.type === 'profit' ? "#1a1a1a" : "#333",
                                     border: item.type === 'cost' ? '2px dashed #f44336' : `2px solid ${GOLD_COLOR}`,
-                                    boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                                    boxShadow: "0 5px 15px rgba(0,0,0,0.05)"
                                 }}>
-                                    <Typography variant="caption" display="block" fontWeight={600} mb={1} sx={{ color: item.type === 'cost' ? '#f44336' : (item.type === 'profit' ? DARK_BG : GOLD_COLOR) }}>
-                                        {item.label}
-                                    </Typography>
-                                    <Typography variant="h5" fontWeight={800} sx={{ color: item.type === 'cost' ? '#f44336' : (item.type === 'profit' ? DARK_BG : DARK_BG) }}>
-                                        {item.value}
-                                    </Typography>
+                                    <Typography variant="caption" display="block" fontWeight={600} mb={1} sx={{
+                                        color: item.type === 'cost' ? '#f44336' : (item.type === 'profit' ? "#1a1a1a" : GOLD_COLOR)
+                                    }}>{item.label}</Typography>
+                                    <Typography variant="h5" fontWeight={800} sx={{
+                                        color: item.type === 'cost' ? '#f44336' : (item.type === 'profit' ? "#1a1a1a" : "#333")
+                                    }}>{item.value}</Typography>
                                 </Card>
                             </motion.div>
                         </Grid>
@@ -159,85 +270,53 @@ export default function BusinessModel() {
                 </Grid>
             </SectionWrapper>
 
-            {/* First Year Business Plan Timeline */}
-            <SectionWrapper sx={{ py: 8 }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: DARK_BG }}>
+            {/* Timeline */}
+            <SectionWrapper sx={{ py: 10, background: LIGHT_ACCENT }}>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: HERO_COLOR }}>
                     First Year Business Plan Timeline
                 </Typography>
-
-                <Box sx={{ position: "relative", px: { xs: 0, md: 4 } }}>
-                    {/* Timeline Line */}
-                    <Box sx={{
-                        position: { xs: "absolute", md: "relative" },
-                        top: 0,
-                        left: { xs: "20px", md: "0" },
-                        width: { xs: "4px", md: "100%" },
-                        height: { xs: "100%", md: "4px" },
-                        bgcolor: GOLD_COLOR,
-                        mx: { md: 0 },
-                        zIndex: 0
-                    }} />
-
-                    <Grid container spacing={4}>
-                        {quarterlyPlan.map((q, i) => (
-                            <Grid item xs={12} md={3} key={i}>
-                                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.2 }} viewport={{ once: true }}>
-                                    <Card sx={{
-                                        p: 3, textAlign: "center", borderRadius: 4, height: '100%',
-                                        border: `2px solid ${GOLD_COLOR}`, position: "relative",
-                                        boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                                        "&:hover": { boxShadow: `0 15px 40px rgba(184, 134, 11, 0.2)` },
-                                        // Mobile/Vertical Timeline Dot
-                                        '&::before': {
-                                            content: '""',
-                                            position: 'absolute',
-                                            top: { xs: '20px', md: '-14px' },
-                                            left: { xs: '-10px', md: '50%' },
-                                            transform: { xs: 'none', md: 'translateX(-50%)' },
-                                            width: '20px',
-                                            height: '20px',
-                                            borderRadius: '50%',
-                                            bgcolor: GOLD_COLOR,
-                                            zIndex: 1
-                                        }
-                                    }}>
-                                        <Typography variant="h5" fontWeight={800} sx={{ color: GOLD_COLOR }}>{q.quarter}</Typography>
-                                        <Typography fontWeight={700} mb={1} sx={{ color: DARK_BG }}>{q.title}</Typography>
-                                        <Typography variant="body1">
-                                            <Box component="span" fontWeight={700}>Target:</Box> {q.target}
-                                        </Typography>
-                                        <Typography variant="body1" mb={1}>
-                                            <Box component="span" fontWeight={700}>Savings:</Box> {q.savings}
-                                        </Typography>
-                                        <Typography variant="subtitle2" mt={2} mb={1} fontWeight={700}>Key Focus Areas:</Typography>
-                                        <ul style={{ listStyle: "disc", paddingLeft: "20px", textAlign: "left", color: "#555" }}>
-                                            {q.focus.map((f, j) => <li key={j} style={{ fontSize: "0.8rem", marginBottom: '4px' }}>{f}</li>)}
-                                        </ul>
-                                    </Card>
-                                </motion.div>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
+                <Grid container spacing={16} justifyContent="center">
+                    {quarterlyPlan.map((q, i) => (
+                        <Grid item xs={12} md={3} key={i}>
+                            <motion.div {...fadeUp}>
+                                <Card sx={{
+                                    p: 4, textAlign: "center", borderRadius: 6,
+                                    height: '100%', boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+                                    border: `2px solid ${GOLD_COLOR}`,
+                                    "&:hover": { boxShadow: `0 15px 40px rgba(255,215,0,0.2)` }
+                                }}>
+                                    <Typography variant="h5" fontWeight={800} sx={{ color: GOLD_COLOR }}>{q.quarter}</Typography>
+                                    <Typography fontWeight={700} mb={1} color="#333">{q.title}</Typography>
+                                    <Typography variant="body1"><Box fontWeight={700}>Target:</Box> {q.target}</Typography>
+                                    <Typography variant="body1" mb={1}><Box fontWeight={700}>Savings:</Box> {q.savings}</Typography>
+                                    <Typography variant="subtitle2" mt={2} mb={1} fontWeight={700}>Key Focus Areas:</Typography>
+                                    <ul style={{ listStyle: "disc", paddingLeft: "20px", textAlign: "left", color: "#555" }}>
+                                        {q.focus.map((f, j) => <li key={j} style={{ fontSize: "0.85rem", marginBottom: '4px' }}>{f}</li>)}
+                                    </ul>
+                                </Card>
+                            </motion.div>
+                        </Grid>
+                    ))}
+                </Grid>
             </SectionWrapper>
 
             {/* Competitive Advantage */}
-            <SectionWrapper sx={{ background: LIGHT_GOLD_BG }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: DARK_BG }}>
+            <SectionWrapper sx={{ background: PRIMARY_BG, py: 10 }}>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" sx={{ color: HERO_COLOR }}>
                     Strategic Advantage: The PureGram Difference
                 </Typography>
                 <Grid container spacing={4} justifyContent="center">
                     {competitiveAdv.map((item, i) => (
                         <Grid item xs={12} sm={6} md={4} key={i}>
-                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.15 }} viewport={{ once: true }}>
+                            <motion.div {...fadeUp}>
                                 <Card sx={{
-                                    p: 4, textAlign: "center", height: '100%', borderRadius: 4,
-                                    border: `2px solid ${DARK_BG}`,
-                                    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                                    "&:hover": { boxShadow: `0 15px 40px rgba(184, 134, 11, 0.2)` },
+                                    p: 4, textAlign: "center", borderRadius: 6,
+                                    height: '100%', boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+                                    border: `2px solid ${GOLD_COLOR}`,
+                                    "&:hover": { boxShadow: `0 15px 40px rgba(255,215,0,0.2)` }
                                 }}>
-                                    <Box sx={{ color: GOLD_COLOR, mb: 1.5 }}>{item.icon}</Box>
-                                    <Typography variant="h6" fontWeight={700} mb={1} sx={{ color: DARK_BG }}>{item.title}</Typography>
+                                    <Box sx={{ color: GOLD_COLOR, mb: 2 }}>{item.icon}</Box>
+                                    <Typography variant="h6" fontWeight={700} mb={1} sx={{ color: "#333" }}>{item.title}</Typography>
                                     <Typography color="text.secondary">{item.desc}</Typography>
                                 </Card>
                             </motion.div>
@@ -245,6 +324,13 @@ export default function BusinessModel() {
                     ))}
                 </Grid>
             </SectionWrapper>
+
+            <style>{`
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `}</style>
         </>
     );
 }

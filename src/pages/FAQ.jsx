@@ -3,14 +3,15 @@ import { Box, Container, Typography, Accordion, AccordionSummary, AccordionDetai
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { motion } from "framer-motion";
 import { FaUserShield, FaGift, FaLock, FaCreditCard, FaUserTie, FaRegBuilding, FaChevronDown, FaEnvelope, FaPhone } from "react-icons/fa";
+import SectionWrapper from "../components/SectionWrapper";
 
-// --- Premium Style Constants (Matching other components) ---
+// --- Style Constants ---
 const GOLD_COLOR = "#b8860b";
-const DARK_BG = "#1a1a1a";
-const LIGHT_GOLD_BG = "#fffaf0";
 const GOLD_GRADIENT = "linear-gradient(90deg, #b8860b, #ffd700)";
+const LIGHT_BG = "#f5f5f5";
+const HERO_BG = "#1e37a3"; // hero section with premium blue
+const DARK_TEXT = "#333";
 
-// Categorized FAQ Data
 const categorizedFaqs = [
     {
         category: "Getting Started",
@@ -74,7 +75,6 @@ const categorizedFaqs = [
 const PremiumAccordion = motion(Accordion);
 
 export default function FAQ() {
-    // State to manage expanded panel for single open FAQ, premium feel
     const [expanded, setExpanded] = useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -82,13 +82,14 @@ export default function FAQ() {
     };
 
     return (
-        <Box component="main" sx={{ py: 10, background: LIGHT_GOLD_BG }}>
+        <Box component="main" sx={{ py: { xs: 6, md: 10 }, background: LIGHT_BG }}>
             <Container maxWidth="lg">
+                {/* Header */}
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-                    <Typography variant="h3" fontWeight={800} textAlign="center" sx={{ mb: 1, color: DARK_BG }}>
+                    <Typography variant="h3" fontWeight={800} textAlign="center" sx={{ mb: 1, color: DARK_TEXT }}>
                         Frequently Asked Questions
                     </Typography>
-                    <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 8, fontWeight: 500 }}>
+                    <Typography variant="h6" textAlign="center" sx={{ mb: 8, fontWeight: 500, color: DARK_TEXT }}>
                         Find answers to common questions about PureGram digital gold savings
                     </Typography>
                 </motion.div>
@@ -102,12 +103,11 @@ export default function FAQ() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.7, delay: catIndex * 0.1 }}
                             >
-                                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', color: DARK_BG }}>
-                                    <Box component={category.icon} sx={{ color: GOLD_COLOR, mr: 1, fontSize: '1.5rem' }} />
-                                    <Typography variant="h5" fontWeight={700}>
-                                        {category.category}
-                                    </Typography>
+                                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', color: DARK_TEXT }}>
+                                    <Box component={category.icon} sx={{ color: GOLD_COLOR, mr: 1.5, fontSize: '1.5rem' }} />
+                                    <Typography variant="h5" fontWeight={700}>{category.category}</Typography>
                                 </Box>
+
                                 <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
                                     {category.questions.map((f, qIndex) => (
                                         <PremiumAccordion
@@ -115,7 +115,7 @@ export default function FAQ() {
                                             expanded={expanded === `panel-${catIndex}-${qIndex}`}
                                             onChange={handleChange(`panel-${catIndex}-${qIndex}`)}
                                             sx={{
-                                                bgcolor: "white",
+                                                bgcolor: "#fff",
                                                 boxShadow: "0px 5px 15px rgba(0,0,0,0.05)",
                                                 borderRadius: 3,
                                                 border: expanded === `panel-${catIndex}-${qIndex}` ? `1px solid ${GOLD_COLOR}` : '1px solid transparent',
@@ -127,14 +127,10 @@ export default function FAQ() {
                                                 expandIcon={<FaChevronDown color={GOLD_COLOR} />}
                                                 sx={{ px: 3, py: 1.5 }}
                                             >
-                                                <Typography fontWeight={600} color={DARK_BG}>
-                                                    {f.q}
-                                                </Typography>
+                                                <Typography fontWeight={600} color={DARK_TEXT}>{f.q}</Typography>
                                             </AccordionSummary>
                                             <AccordionDetails sx={{ px: 3, pb: 3, borderTop: `1px dashed ${GOLD_COLOR}` }}>
-                                                <Typography color="text.secondary">
-                                                    {f.a}
-                                                </Typography>
+                                                <Typography color={DARK_TEXT}>{f.a}</Typography>
                                             </AccordionDetails>
                                         </PremiumAccordion>
                                     ))}
@@ -144,42 +140,43 @@ export default function FAQ() {
                     ))}
                 </Grid>
 
-                {/* Still Have Questions? CTA */}
-                <Box sx={{ 
-                    textAlign: "center", mt: 10, p: 6, borderRadius: 4, 
-                    background: DARK_BG, color: "#fff", 
-                    boxShadow: "0 15px 40px rgba(0,0,0,0.3)" 
-                }}>
-                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }}>
-                        <Typography variant="h4" fontWeight={800} sx={{ mb: 1, color: GOLD_COLOR }}>Still Have Questions?</Typography>
-                        <Typography variant="h6" sx={{ color: '#aaa', mb: 4 }}>
+                {/* CTA Section */}
+  <SectionWrapper sx={{ py: 12, textAlign: "center", background: HERO_BG, color: "#fff" }}>
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
+          <Typography variant="h4" fontWeight={800} mb={3} sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
+                            Still Have Questions?
+                        </Typography>
+          <Typography variant="h6" sx={{ opacity: 0.9 }} mb={4}>
                             Our customer support team is here to help you 24/7. Reach out directly.
                         </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-                            <Button 
-                                variant="contained" 
-                                startIcon={<FaEnvelope />}
-                                size="large"
-                                sx={{ 
-                                    background: GOLD_GRADIENT, color: DARK_BG, px: 4, py: 1.5, fontWeight: 700, borderRadius: 10 
-                                }}
-                            >
+                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', gap: 3 }}>
+                            <Button
+            variant="contained"
+            size="large"
+            sx={{
+              px: 6, py: 2, fontWeight: 700, fontSize: "1.1rem",
+              background: GOLD_GRADIENT, color: "#1a1a1a",
+              borderRadius: 10, boxShadow: "0 10px 30px rgba(255,199,0,0.3)",
+              "&:hover": { transform: "scale(1.05)", boxShadow: "0 15px 40px rgba(255,199,0,0.5)" }
+            }}
+          >
                                 Email Us
                             </Button>
-                            <Button 
-                                variant="outlined" 
-                                startIcon={<FaPhone />}
-                                size="large"
-                                sx={{ 
-                                    borderColor: GOLD_COLOR, color: GOLD_COLOR, px: 4, py: 1.5, fontWeight: 700, borderRadius: 10,
-                                    '&:hover': { borderColor: GOLD_COLOR, background: GOLD_COLOR, color: DARK_BG }
-                                }}
-                            >
+                            <Button
+            variant="contained"
+            size="large"
+            sx={{
+              px: 6, py: 2, fontWeight: 700, fontSize: "1.1rem",
+              background: GOLD_GRADIENT, color: "#1a1a1a",
+              borderRadius: 10, boxShadow: "0 10px 30px rgba(255,199,0,0.3)",
+              "&:hover": { transform: "scale(1.05)", boxShadow: "0 15px 40px rgba(255,199,0,0.5)" }
+            }}
+          >
                                 Call Us
                             </Button>
                         </Box>
                     </motion.div>
-                </Box>
+                </SectionWrapper>
             </Container>
         </Box>
     );

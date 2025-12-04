@@ -27,8 +27,12 @@ export default function FeatureGrid({ features }) {
       <Grid container spacing={4} justifyContent="center">
         {features.map((f, i) => (
           <Grid item xs={12} sm={6} md={3} key={i}>
-            <motion.div variants={cardVariants}>
-              <Card 
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: i * 0.15 }}
+    viewport={{ once: true }}
+  >              <Card 
                 sx={{ 
                   textAlign: "center", 
                   p: 3, 

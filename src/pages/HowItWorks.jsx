@@ -5,12 +5,12 @@ import { Grid, Card, Typography, Button, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { FaUserPlus, FaPiggyBank, FaGift, FaLock, FaCalendarAlt, FaMoneyBillWave, FaRupeeSign } from "react-icons/fa";
 
-// --- Premium Style Constants (Matching Home.js & About.js) ---
+// --- Premium Style Constants ---
 const GOLD_GRADIENT = "linear-gradient(90deg, #b8860b, #ffd700, #b8860b)";
 const GOLD_COLOR = "#b8860b";
 const DARK_BG = "#1a1a1a";
 const LIGHT_BG = "#f5f5f5";
-const LIGHT_GOLD_BG = "#fff8e1"; // Used for sections
+const LIGHT_GOLD_BG = "#fff8e1";
 const BLUE_HERO_BG = "#1e37a3";
 
 // Framer Motion Variants
@@ -18,6 +18,25 @@ const itemVariant = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
+
+// Animated sparkles
+const Sparkle = ({ x, y, size, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1, 0.5], y: [0, -10, 0] }}
+    transition={{ repeat: Infinity, duration: 2 + Math.random(), delay }}
+    style={{
+      position: "absolute",
+      top: y,
+      left: x,
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: "radial-gradient(circle, #ffd700 0%, #b8860b 100%)",
+      pointerEvents: "none",
+    }}
+  />
+);
 
 export default function HowItWorks() {
     const steps = [
@@ -77,42 +96,77 @@ export default function HowItWorks() {
     return (
         <>
             {/* Hero Section */}
+                  <Box sx={{ position: "relative" }}>
+            
             <HeroSection
                 title="Your Digital Gold Journey: Simple, Secure, and Rewarding"
                 subtitle="Start your digital gold journey in 4 easy steps."
                 image="/assets/how-hero.jpg"
             />
+               {/* Sparkles */}
+        {Array.from({ length: 19 }).map((_, i) => (
+          <Sparkle key={i} x={`${Math.random() * 100}%`} y={`${Math.random() * 100}%`} size={4 + Math.random() * 6} delay={Math.random() * 2} />
+        ))}
+      </Box>
 
-            {/* Steps */}
-            <SectionWrapper>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center">
+            {/* Steps Section */}
+            <SectionWrapper sx={{ py: 12, position: "relative", overflow: "hidden" }}>
+                {/* Floating Gold Particles */}
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        pointerEvents: "none",
+                        zIndex: 0,
+                    }}
+                >
+                    {[...Array(25)].map((_, i) => (
+                        <Box
+                            key={i}
+                            sx={{
+                                position: "absolute",
+                                width: `${Math.random() * 8 + 4}px`,
+                                height: `${Math.random() * 8 + 4}px`,
+                                backgroundColor: "#FFD700",
+                                borderRadius: "50%",
+                                top: `${Math.random() * 100}%`,
+                                left: `${Math.random() * 100}%`,
+                                opacity: Math.random() * 0.6 + 0.3,
+                                animation: `float ${5 + Math.random() * 5}s ease-in-out infinite alternate`,
+                                animationDelay: `${Math.random() * 5}s`,
+                            }}
+                        />
+                    ))}
+                </Box>
+
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" zIndex={1}>
                     How PureGram Works
                 </Typography>
-                <Grid container spacing={4} justifyContent="center">
+
+                <Grid container spacing={4} justifyContent="center" sx={{ position: "relative", zIndex: 1 }}>
                     {steps.map((item, i) => (
                         <Grid item xs={12} sm={6} key={i}>
                             <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: i * 0.15 }}
+                                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50, scale: 0.95 }}
+                                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ duration: 0.7 }}
                                 viewport={{ once: true }}
                             >
                                 <Card sx={{
                                     p: 4,
                                     borderRadius: 4,
                                     height: '100%',
-                                    // Use subtle light gold background
                                     backgroundColor: LIGHT_GOLD_BG,
                                     boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
                                     transition: "0.3s",
-                                    "&:hover": { 
-                                        transform: "scale(1.02)", 
-                                        boxShadow: `0 15px 40px rgba(184, 134, 11, 0.2)` 
-                                    },
+                                    "&:hover": { transform: "scale(1.02)", boxShadow: `0 15px 40px rgba(184, 134, 11, 0.2)` },
+                                    position: "relative",
+                                    zIndex: 2
                                 }}>
-                                    <Box sx={{ color: GOLD_COLOR, mb: 1.5 }}>
-                                        {item.icon}
-                                    </Box>
+                                    <Box sx={{ color: GOLD_COLOR, mb: 1.5 }}>{item.icon}</Box>
                                     <Typography variant="subtitle1" fontWeight={700} sx={{ color: GOLD_COLOR }} mb={1}>{item.step}</Typography>
                                     <Typography variant="h5" fontWeight={800} mb={2} sx={{ color: DARK_BG }}>{item.title}</Typography>
                                     <ul style={{ listStyle: "none", padding: 0, lineHeight: 1.8, textAlign: 'left', margin: '0 0 1rem 0' }}>
@@ -123,20 +177,61 @@ export default function HowItWorks() {
                         </Grid>
                     ))}
                 </Grid>
+
+                <style>
+                    {`
+                        @keyframes float {
+                            0% { transform: translateY(0px); }
+                            50% { transform: translateY(-20px); }
+                            100% { transform: translateY(0px); }
+                        }
+                    `}
+                </style>
             </SectionWrapper>
 
-            {/* Flexible Saving Options */}
-            <SectionWrapper sx={{ background: LIGHT_BG, py: 8 }}>
-                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center">
+            {/* Flexible Saving Options Section */}
+            <SectionWrapper sx={{ background: LIGHT_BG, py: 12, position: "relative", overflow: "hidden" }}>
+                 {/* Floating Gold Particles */}
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        pointerEvents: "none",
+                        zIndex: 0,
+                    }}
+                >
+                    {[...Array(25)].map((_, i) => (
+                        <Box
+                            key={i}
+                            sx={{
+                                position: "absolute",
+                                width: `${Math.random() * 8 + 4}px`,
+                                height: `${Math.random() * 8 + 4}px`,
+                                backgroundColor: "#FFD700",
+                                borderRadius: "50%",
+                                top: `${Math.random() * 100}%`,
+                                left: `${Math.random() * 100}%`,
+                                opacity: Math.random() * 0.6 + 0.3,
+                                animation: `float ${5 + Math.random() * 5}s ease-in-out infinite alternate`,
+                                animationDelay: `${Math.random() * 5}s`,
+                            }}
+                        />
+                    ))}
+                </Box>
+                <Typography variant="h4" fontWeight={700} mb={6} textAlign="center" zIndex={1}>
                     Flexible Saving Options
                 </Typography>
-                <Grid container spacing={4} justifyContent="center">
+
+                <Grid container spacing={4} justifyContent="center" sx={{ position: "relative", zIndex: 1 }}>
                     {flexiblePlans.map((plan, i) => (
                         <Grid item xs={12} md={4} key={i}>
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: i * 0.2 }}
+                                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50, scale: 0.95 }}
+                                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ duration: 0.7 }}
                                 viewport={{ once: true }}
                             >
                                 <Card sx={{
@@ -145,9 +240,12 @@ export default function HowItWorks() {
                                     borderRadius: 4,
                                     height: '100%',
                                     boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
-                                    borderBottom: `4px solid ${GOLD_COLOR}`, // Premium accent
-                                    "&:hover": { transform: "translateY(-3px)", boxShadow: `0 10px 30px rgba(184, 134, 11, 0.2)` },
-                                    transition: "0.3s"
+                                    borderBottom: `4px solid ${GOLD_COLOR}`,
+                                    background: "rgba(255,250,240,0.95)",
+                                    "&:hover": { transform: "translateY(-5px) scale(1.02)", boxShadow: `0 10px 30px rgba(184, 134, 11, 0.2)` },
+                                    transition: "0.3s",
+                                    position: "relative",
+                                    zIndex: 2
                                 }}>
                                     <Box sx={{ color: GOLD_COLOR, mb: 1.5 }}>{plan.icon}</Box>
                                     <Typography variant="h6" fontWeight={700} mb={1} sx={{ color: DARK_BG }}>{plan.title}</Typography>
@@ -157,10 +255,19 @@ export default function HowItWorks() {
                         </Grid>
                     ))}
                 </Grid>
+                  <style>
+                    {`
+                        @keyframes float {
+                            0% { transform: translateY(0px); }
+                            50% { transform: translateY(-20px); }
+                            100% { transform: translateY(0px); }
+                        }
+                    `}
+                </style>
             </SectionWrapper>
 
-            {/* Highlight Reward (High Contrast Gold Card) */}
-            <SectionWrapper sx={{ textAlign: "center", py: 12 }}>
+            {/* Highlight Reward Section */}
+            <SectionWrapper sx={{ textAlign: "center", py: 12, position: "relative" }}>
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -172,7 +279,6 @@ export default function HowItWorks() {
                         display: "inline-block",
                         textAlign: "center",
                         borderRadius: 4,
-                        // Use the rich GOLD_GRADIENT for maximum impact
                         background: GOLD_GRADIENT,
                         boxShadow: "0 20px 50px rgba(0,0,0,0.2), 0 0 25px rgba(255,223,0,0.3)",
                         maxWidth: 900,
@@ -183,22 +289,16 @@ export default function HowItWorks() {
                             Save ₹1,00,000 in 6 months to earn 1.8g FREE Gold
                         </Typography>
                         <Typography variant="h6" sx={{ color: DARK_BG, opacity: 0.95, lineHeight: 1.5 }}>
-                            Bonus Gold worth **~₹24,000** automatically added to your portfolio.
+                            Bonus Gold worth ~₹24,000 automatically added to your portfolio.
                         </Typography>
                     </Card>
                 </motion.div>
             </SectionWrapper>
 
-            {/* CTA (High Contrast Black) */}
-      <SectionWrapper sx={{ py: 12, textAlign: "center", background: BLUE_HERO_BG, color: "#fff" }}>
-
+            {/* CTA Section */}
+            <SectionWrapper sx={{ py: 12, textAlign: "center", background: BLUE_HERO_BG, color: "#fff" }}>
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-                    <Typography 
-                        variant="h4" 
-                        fontWeight={800} 
-                        mb={3} 
-                        sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}
-                    >
+                    <Typography variant="h4" fontWeight={800} mb={3} sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
                         Ready to Get Started?
                     </Typography>
                     <Typography variant="h6" sx={{ opacity: 0.9 }} mb={4}>
@@ -212,7 +312,6 @@ export default function HowItWorks() {
                             py: 2,
                             fontWeight: 700,
                             fontSize: "1.1rem",
-                            // Use rich gold gradient on the button
                             background: GOLD_GRADIENT,
                             color: DARK_BG,
                             boxShadow: "0 10px 30px rgba(184, 134, 11, 0.5)",
